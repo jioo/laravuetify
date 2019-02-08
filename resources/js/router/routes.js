@@ -1,5 +1,5 @@
 const Welcome = () => import('~/pages/welcome').then(m => m.default || m)
-const Login = () => import('~/pages/auth/login').then(m => m.default || m)
+const Login = () => import('~/pages/auth/login')
 const Register = () => import('~/pages/auth/register').then(m => m.default || m)
 const PasswordEmail = () => import('~/pages/auth/password/email').then(m => m.default || m)
 const PasswordReset = () => import('~/pages/auth/password/reset').then(m => m.default || m)
@@ -19,13 +19,15 @@ export default [
   { path: '/password/reset/:token', name: 'password.reset', component: PasswordReset },
 
   { path: '/home', name: 'home', component: Home },
-  { path: '/settings',
+  {
+    path: '/settings',
     component: Settings,
     children: [
       { path: '', redirect: { name: 'settings.profile' } },
       { path: 'profile', name: 'settings.profile', component: SettingsProfile },
       { path: 'password', name: 'settings.password', component: SettingsPassword }
-    ] },
+    ]
+  },
 
   { path: '*', component: NotFound }
 ]
