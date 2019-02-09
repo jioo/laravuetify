@@ -35,7 +35,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'roles',
     ];
 
     /**
@@ -44,7 +44,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $appends = [
-        'photo_url',
+        'photo_url', 'role',
     ];
 
     /**
@@ -55,6 +55,16 @@ class User extends Authenticatable implements JWTSubject
     public function getPhotoUrlAttribute()
     {
         return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
+    }
+
+    /**
+     * Get the profile photo URL attribute.
+     *
+     * @return string
+     */
+    public function getRoleAttribute()
+    {
+        return $this->getRoleNames();
     }
 
     /**
