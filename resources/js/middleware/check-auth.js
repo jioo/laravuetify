@@ -1,9 +1,9 @@
 import store from '~/store'
 
 export default async (to, from, next) => {
-  if (!store.getters['check'] && store.getters['auth/token']) {
+  if (!store.getters['check'] && store.getters['token']) {
     try {
-      await store.dispatch('auth/fetchUser')
+      await store.dispatch('fetchUser')
     } catch (e) { }
   }
 

@@ -10,12 +10,6 @@
       </button>
 
       <div id="navbarToggler" class="collapse navbar-collapse">
-        <ul class="navbar-nav">
-          <locale-dropdown />
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li> -->
-        </ul>
 
         <ul class="navbar-nav ml-auto">
           <!-- Authenticated -->
@@ -29,13 +23,13 @@
             <div class="dropdown-menu">
               <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
                 <fa icon="cog" fixed-width />
-                {{ $t('settings') }}
+                {{ 'Settings' }}
               </router-link>
 
               <div class="dropdown-divider" />
               <a href="#" class="dropdown-item pl-3" @click.prevent="logout">
                 <fa icon="sign-out-alt" fixed-width />
-                {{ $t('logout') }}
+                {{ 'Logout' }}
               </a>
             </div>
           </li>
@@ -43,12 +37,12 @@
           <template v-else>
             <li class="nav-item">
               <router-link :to="{ name: 'login' }" class="nav-link" active-class="active">
-                {{ $t('login') }}
+                {{ 'Login' }}
               </router-link>
             </li>
             <li class="nav-item">
               <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
-                {{ $t('register') }}
+                {{ 'Register' }}
               </router-link>
             </li>
           </template>
@@ -60,25 +54,19 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import LocaleDropdown from './LocaleDropdown'
 
 export default {
-  components: {
-    LocaleDropdown
-  },
 
   data: () => ({
     appName: window.config.appName
   }),
 
-  computed: mapGetters({
-    user: 'auth/user'
-  }),
+  computed: mapGetters(['user']),
 
   methods: {
     async logout () {
       // Log out the user.
-      await this.$store.dispatch('auth/logout')
+      await this.$store.dispatch('logout')
 
       // Redirect to login.
       this.$router.push({ name: 'login' })
