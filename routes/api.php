@@ -19,7 +19,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+});
 
+Route::group(['middleware' => ['auth:api', 'role:admin']], function () {
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
 });

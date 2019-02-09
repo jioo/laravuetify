@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  middleware: 'auth',
+  middleware: 'admin',
 
   computed: {
     tabs () {

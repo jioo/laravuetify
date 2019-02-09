@@ -12,7 +12,11 @@ export const state = {
 export const getters = {
   user: state => state.user,
   token: state => state.token,
-  check: state => state.user !== null
+  check: state => state.user !== null,
+  isAdmin: state => {
+    if (state.user === null) return false
+    return state.user.role.includes('admin')
+  }
 }
 
 // mutations

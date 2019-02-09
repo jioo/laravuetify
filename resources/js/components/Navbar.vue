@@ -21,7 +21,7 @@
               {{ user.name }}
             </a>
             <div class="dropdown-menu">
-              <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
+              <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3" v-if="isAdmin">
                 <fa icon="cog" fixed-width />
                 {{ 'Settings' }}
               </router-link>
@@ -61,7 +61,7 @@ export default {
     appName: window.config.appName
   }),
 
-  computed: mapGetters(['user']),
+  computed: mapGetters(['user', 'isAdmin']),
 
   methods: {
     async logout () {
