@@ -6,10 +6,19 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    use HasRoles;
+
+    /**
+     * Default guard in laravel-permission.
+     *
+     * @var string
+     */
+    protected $guard_name = 'api';
 
     /**
      * The attributes that are mass assignable.
