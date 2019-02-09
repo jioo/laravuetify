@@ -37,6 +37,8 @@ import Form from 'vform'
 export default {
   scrollToTop: false,
 
+  middleware: 'admin',
+
   metaInfo () {
     return { title: this.$t('settings') }
   },

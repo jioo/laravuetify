@@ -14,8 +14,8 @@ class DefaultAdminSeeder extends Seeder
     {
         User::create([
             'name' => 'Justine Joshua Quiazon',
-            'email' => 'jio.qzn@gmail.com',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('123456'),
-        ])->assignRole('user');
+        ])->assignRole('admin');
     }
 }
