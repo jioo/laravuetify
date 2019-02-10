@@ -5,10 +5,15 @@ import swal from 'sweetalert2'
 
 // Request interceptor
 axios.interceptors.request.use(request => {
-  const token = store.getters['token']
-  if (token) {
+  const 
+    token = store.getters['token'],
+    csrfToken = document.head.querySelector('meta[name="csrf-token"]')
+
+  if (token)
     request.headers.common['Authorization'] = `Bearer ${token}`
-  }
+  
+  request.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+  request.headers.common['X-CSRF-TOKEN'] = csrfToken.content
 
   // request.headers['X-Socket-Id'] = Echo.socketId()
 
@@ -17,6 +22,7 @@ axios.interceptors.request.use(request => {
 
 // Response interceptor
 axios.interceptors.response.use(response => response, error => {
+  console.log(error)
   const { status } = error.response
 
   if (status >= 500) {
