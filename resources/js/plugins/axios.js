@@ -1,10 +1,14 @@
+import Vue from 'vue'
 import axios from 'axios'
 import store from '~/store'
 import router from '~/router'
 import swal from 'sweetalert2'
+import { EventBus } from '../event-bus'
+
+const _axios = axios.create(config)
 
 // Request interceptor
-axios.interceptors.request.use(request => {
+_axios.interceptors.request.use(request => {
   const 
     token = store.getters['token'],
     csrfToken = document.head.querySelector('meta[name="csrf-token"]')
@@ -21,8 +25,7 @@ axios.interceptors.request.use(request => {
 })
 
 // Response interceptor
-axios.interceptors.response.use(response => response, error => {
-  console.log(error)
+_axios.interceptors.response.use(response => response, error => {
   const { status } = error.response
 
   if (status >= 500) {
@@ -51,5 +54,37 @@ axios.interceptors.response.use(response => response, error => {
     })
   }
 
+  if (status === 422) {
+    let message = ''
+    let object = error.response.data.errors
+
+    for(var key in object) {
+      message += `${object[key][0]}<br/>`
+    }
+
+    EventBus.$emit('bad-request', message)
+    EventBus.$emit('add-movie');
+  }
+
   return Promise.reject(error)
 })
+
+Plugin.install = function (Vue, options) {
+  Vue.axios = _axios
+  window.axios = _axios
+  Object.defineProperties(Vue.prototype, {
+      axios: {
+          get() {
+              return _axios
+          }
+      },
+      $axios: {
+          get() {
+              return _axios
+          }
+      },
+  })
+}
+
+Vue.use(Plugin)
+export default Plugin

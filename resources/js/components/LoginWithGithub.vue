@@ -1,13 +1,23 @@
 <template>
-  <button v-if="githubAuth" class="btn btn-dark ml-auto" type="button" @click="login">
-    {{ 'Login with' }}
-    <fa :icon="['fab', 'github']" />
-  </button>
+  <v-flex mb-3>
+    <v-btn
+      block
+      color="black"
+      class="white--text"
+      :loading="loading"
+      @click="login"
+    >
+      <v-icon left dark>fab fa-github</v-icon>
+      Login with Github
+    </v-btn>
+  </v-flex>
 </template>
 
 <script>
 export default {
   name: 'LoginWithGithub',
+
+  props: ['loading'],
 
   computed: {
     githubAuth: () => window.config.githubAuth,

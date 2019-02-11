@@ -1,5 +1,5 @@
 const Welcome = () => import('~/pages/welcome').then(m => m.default || m)
-const Login = () => import('~/pages/auth/login')
+const Login = () => import('~/pages/auth/login').then(m => m.default || m)
 const Register = () => import('~/pages/auth/register').then(m => m.default || m)
 const PasswordEmail = () => import('~/pages/auth/password/email').then(m => m.default || m)
 const PasswordReset = () => import('~/pages/auth/password/reset').then(m => m.default || m)
@@ -11,23 +11,33 @@ const SettingsProfile = () => import('~/pages/settings/profile').then(m => m.def
 const SettingsPassword = () => import('~/pages/settings/password').then(m => m.default || m)
 
 export default [
-  { path: '/', name: 'welcome', component: Welcome },
+  { path: '/login', name: 'login', component: () => import('~/pages/login').then(m => m.default || m) },
 
-  { path: '/login', name: 'login', component: Login },
-  { path: '/register', name: 'register', component: Register },
-  { path: '/password/reset', name: 'password.request', component: PasswordEmail },
-  { path: '/password/reset/:token', name: 'password.reset', component: PasswordReset },
-
-  { path: '/home', name: 'home', component: Home },
   {
-    path: '/settings',
-    component: Settings,
+    path: '/',
+    component: () => import('~/layouts/default').then(m => m.default || m), 
     children: [
-      { path: '', redirect: { name: 'settings.profile' } },
-      { path: 'profile', name: 'settings.profile', component: SettingsProfile },
-      { path: 'password', name: 'settings.password', component: SettingsPassword }
-    ]
-  },
+      { path: '', redirect: { name: 'dashboard' } },
+      { path: 'dashboard', name: 'welcome', component: () => import('~/pages/dashboard').then(m => m.default || m) },
+    ],
+  }
+  // { path: '/', name: 'welcome', component: Welcome },
 
-  { path: '*', component: NotFound }
+  // { path: '/login', name: 'login', component: Login },
+  // { path: '/register', name: 'register', component: Register },
+  // { path: '/password/reset', name: 'password.request', component: PasswordEmail },
+  // { path: '/password/reset/:token', name: 'password.reset', component: PasswordReset },
+
+  // { path: '/home', name: 'home', component: Home },
+  // {
+  //   path: '/settings',
+  //   component: Settings,
+  //   children: [
+  //     { path: '', redirect: { name: 'settings.profile' } },
+  //     { path: 'profile', name: 'settings.profile', component: SettingsProfile },
+  //     { path: 'password', name: 'settings.password', component: SettingsPassword }
+  //   ]
+  // },
+
+  // { path: '*', component: NotFound }
 ]

@@ -21,7 +21,6 @@ if (mix.inProduction()) {
     'vuex',
     'jquery',
     'popper.js',
-    'vue-i18n',
     'vue-meta',
     'js-cookie',
     'bootstrap',
@@ -29,7 +28,13 @@ if (mix.inProduction()) {
     'sweetalert2',
     'vuex-router-sync',
     '@fortawesome/vue-fontawesome',
-    '@fortawesome/fontawesome-svg-core'
+    '@fortawesome/fontawesome-svg-core',
+    'material-design-icons-iconfont',
+    'roboto-fontface',
+    'vuetify',
+    'vuetify',
+    '@fortawesome/fontawesome-free',
+    'vee-validate',
   ])
 }
 
@@ -48,20 +53,3 @@ mix.webpackConfig({
     publicPath: mix.config.hmr ? '//localhost:8080' : '/'
   }
 })
-
-Mix.listen('configReady', (webpackConfig) => {
-    if (Mix.isUsing('hmr')) {
-      // Remove leading '/' from entry keys
-      webpackConfig.entry = Object.keys(webpackConfig.entry).reduce((entries, entry) => {
-        entries[entry.replace(/^\//, '')] = webpackConfig.entry[entry];
-        return entries;
-      }, {});
-  
-      // Remove leading '/' from ExtractTextPlugin instances
-      webpackConfig.plugins.forEach((plugin) => {
-        if (plugin.constructor.name === 'ExtractTextPlugin') {
-          plugin.filename = plugin.filename.replace(/^\//, '');
-        }
-      });
-    }
-  });

@@ -1,21 +1,12 @@
 <template>
-  <div class="main-layout">
-    <navbar />
-
-    <div class="container mt-4">
-      <child />
-    </div>
-  </div>
+  <section>
+    <app-header />
+    <v-content>
+        <v-slide-y-transition mode="out-in">
+            <router-view />
+        </v-slide-y-transition>
+        <notifications />
+    </v-content>
+    <app-footer />
+  </section>
 </template>
-
-<script>
-import Navbar from '~/components/Navbar'
-
-export default {
-  name: 'MainLayout',
-
-  components: {
-    Navbar
-  }
-}
-</script>
