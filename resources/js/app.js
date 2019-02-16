@@ -8,6 +8,8 @@ Vue.use(VueWait)
 
 import '~/plugins'
 
+import '~/components'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

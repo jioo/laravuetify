@@ -3,12 +3,12 @@
     <v-container fluid fill-height>
       <v-layout justify-center>
         <v-flex xs12 sm8 md4>
-          <v-card class="elevation-12">
-            <v-toolbar dark color="primary">
-              <v-toolbar-title>NEST-E Services</v-toolbar-title>
-            </v-toolbar>
+          <material-card
+            color="primary"
+            title="Login Form"
+          >
 
-            <!-- Error messages -->
+          <!-- Error messages -->
             <v-card-text v-if="alert.show">
               <v-alert
                 :value="true"
@@ -53,11 +53,11 @@
                 <v-layout column>
 
                   <!-- Login button -->
-                  <v-flex>
+                  <v-flex mb-2>
                     <v-btn 
                       block 
                       type="button" 
-                      color="primary" 
+                      color="green" 
                       @click.prevent="submit()"
                       :loading="$wait.any">Login</v-btn>
                   </v-flex>
@@ -65,11 +65,12 @@
                   <v-divider></v-divider>
 
                   <!-- Facebook login button -->
-                  <v-flex mb-3>
+                  <v-flex my-2>
                     <v-btn
                       block
                       color="blue"
                       class="white--text"
+                      :loading="$wait.any"
                     >
                       <v-icon left dark>fab fa-facebook</v-icon>
                       Login with Facebook
@@ -84,7 +85,8 @@
               </v-card-text>
 
             </form>
-          </v-card>
+
+          </material-card>
         </v-flex>
       </v-layout>
     </v-container>

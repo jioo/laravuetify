@@ -1,31 +1,20 @@
 <template>
-  <v-footer>
-    <v-layout>
-      <v-flex xs12>
-        <v-icon small class="white--text">code</v-icon>
-        with
-        <v-icon small class="red--text">favorite</v-icon>
-        by <span class="link orange--text" @click.prevent="redirect()">Justine Joshua Quiazon</span>
-        <v-icon small>copyright</v-icon>
-        2018
-      </v-flex>
-    </v-layout>
+  <v-footer
+    id="core-footer"
+    absolute
+    height="82"
+  >
+    <v-spacer/>
+    <span class="font-weight-light copyright">
+      <v-icon color="tertiary" size="20">mdi-code-tags</v-icon>
+      with
+      <v-icon color="tertiary" size="17">mdi-heart</v-icon>
+      by
+      <a href="https://jioo.github.io" target="_blank">Justine Joshua Quiazon</a>
+      &copy;
+      {{ (new Date()).getFullYear() }},
+      Design from 
+      <a href="https://www.creative-tim.com/" target="_blank">Creative Tim</a>
+    </span>
   </v-footer>
 </template>
-
-<script>
-export default {
-  methods: {
-    redirect () {
-      window.open('https://jioo.github.io/', '_blank')
-    }
-  }
-}
-</script>
-
-<style scoped>
-  .link {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-</style>

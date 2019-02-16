@@ -1,24 +1,20 @@
 <template>
   <section>
-    <app-header />
-    <v-content>
-        <v-slide-y-transition mode="out-in">
+    <app-toolbar />
+    <app-drawer />
+      <v-content>
+        <div id="core-view">
+          <v-fade-transition mode="out-in">
             <router-view />
-        </v-slide-y-transition>
-        <!-- <notifications /> -->
-    </v-content>
+          </v-fade-transition>
+        </div>
+      </v-content>
     <app-footer />
   </section>
 </template>
 
-<script>
-import AppHeader from '~/components/AppHeader'
-import AppFooter from '~/components/AppFooter'
-
-export default {
-  components: {
-    AppHeader,
-    AppFooter,
-  }
+<style>
+#core-view {
+  padding-bottom: 100px;
 }
-</script>
+</style>

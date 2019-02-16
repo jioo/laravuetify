@@ -23,12 +23,14 @@ if (mix.inProduction()) {
     'vue-router',
     'sweetalert2',
     'vuex-router-sync',
-    'material-design-icons-iconfont',
-    'roboto-fontface',
     'vuetify',
-    'vuetify',
-    '@fortawesome/fontawesome-free',
     'vee-validate',
+    'chartist',
+    'vue-chartist',
+    'material-design-icons-iconfont',
+    '@fortawesome/fontawesome-free',
+    '@mdi/font',
+    'roboto-fontface',
   ])
 }
 
