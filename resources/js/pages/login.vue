@@ -57,7 +57,7 @@
                     <v-btn 
                       block 
                       type="button" 
-                      color="green" 
+                      color="primary" 
                       @click.prevent="submit()"
                       :loading="$wait.any">Login</v-btn>
                   </v-flex>
@@ -94,15 +94,10 @@
 </template>
 
 <script>
-import LoginWithGithub from '~/components/LoginWithGithub'
 import { mapGetters } from 'vuex'
 
 export default {
 	middleware: 'guest',
-
-  components: {
-    LoginWithGithub
-  },
 
   data: () => ({
     form: {

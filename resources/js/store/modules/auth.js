@@ -70,9 +70,9 @@ export const actions = {
     commit('LOGOUT')
   },
 
-  async FETCH_OAUTH_URL ({ provider }) {
+  async FETCH_OAUTH_URL ({ commit }, payload) {
+    const { provider } = payload
     const { data } = await axios.post(`/api/oauth/${provider}`)
-
     return data.url
   }
 }
