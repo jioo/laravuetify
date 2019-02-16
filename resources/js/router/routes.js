@@ -18,7 +18,7 @@ export default [
     component: () => import('~/layouts/default').then(m => m.default || m), 
     children: [
       { path: '', redirect: { name: 'dashboard' } },
-      { path: 'dashboard', name: 'welcome', component: () => import('~/pages/dashboard').then(m => m.default || m) },
+      { path: 'dashboard', name: 'dashboard', component: () => import('~/pages/dashboard').then(m => m.default || m) },
     ],
   }
   // { path: '/', name: 'welcome', component: Welcome },

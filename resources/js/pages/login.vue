@@ -1,23 +1,25 @@
 <template>
   <v-content>
     <v-container fluid fill-height>
-      <v-layout align-center justify-center>
+      <v-layout justify-center>
         <v-flex xs12 sm8 md4>
           <v-card class="elevation-12">
             <v-toolbar dark color="primary">
               <v-toolbar-title>NEST-E Services</v-toolbar-title>
             </v-toolbar>
+
+            <!-- Error messages -->
+            <v-card-text v-if="alert.show">
+              <v-alert
+                :value="true"
+                color="error"
+                v-html="alert.message"
+              >
+              </v-alert>
+            </v-card-text>
+
             <form>
               <v-card-text>
-                
-                <!-- Error messages -->
-                <v-alert
-                  v-model="alert.show"
-                  color="error"
-                  v-html="alert.message"
-                >
-                </v-alert>
-
                 <!-- Email -->
                 <v-text-field 
                   type="text"
@@ -27,11 +29,12 @@
                   data-vv-name="Email"
                   v-validate="'required|email'"
                   :error-messages="errors.collect('Email')"
+                  mt-3
                 ></v-text-field>
 
                 <!-- Password -->
                 <v-text-field 
-                  type="text"
+                  type="password"
                   label="Password" 
                   prepend-icon="lock" 
                   v-model="form.password"
@@ -90,7 +93,7 @@
 
 <script>
 import LoginWithGithub from '~/components/LoginWithGithub'
-import { EventBus } from '../event-bus'
+import { mapGetters } from 'vuex'
 
 export default {
 	middleware: 'guest',
@@ -101,45 +104,47 @@ export default {
 
   data: () => ({
     form: {
-      email: 'admin@gmail.com',
-      password: '123456',
-    },
-    alert: {
-      show: false,
-      message: ''
+      email: '',
+      password: '',
     },
     remember: false
   }),
 
+  computed: {
+    ...mapGetters(['alert'])
+  },
+
   methods: {
     async login () {
       try {
+      // Start loading
       this.$wait.start('login');
       
       // Submit the form.
       const { data } = await this.$axios.post('/api/login', this.form)
 
       // Save the token.
-      this.$store.dispatch('saveToken', {
+      this.$store.dispatch('SAVE_TOKEN', {
         token: data.token,
         remember: this.remember
       })
 
       // Fetch the user.
-      await this.$store.dispatch('fetchUser')
+      await this.$store.dispatch('FETCH_USER')
 
       // Redirect home.
-      this.$router.push({ name: 'home' })
+      this.$router.push({ name: 'dashboard' })
         
-      } catch (error) { } 
-        finally { 
+      } 
+      catch (error) { } 
+      finally { 
+        // End loading
         this.$wait.end('login') 
       }
     },
 
     submit () {
-      this.alert.show = false
-      this.$wait.start('login');
+      this.$store.dispatch('CLOSE_ALERT_MESSAGE')
 
       this.$validator.validateAll().then(() => {
         // Check if all fields are valid
@@ -149,15 +154,7 @@ export default {
       })
     },
   },
-  
-  mounted () {
-    EventBus.$on('bad-request', message => {
-      console.log('emitted')
-      this.alert = {
-        show: true,
-        message: message
-      }
-    })
-  },
+
+
 }
 </script>

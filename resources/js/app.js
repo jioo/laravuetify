@@ -7,7 +7,6 @@ import VueWait from 'vue-wait'
 Vue.use(VueWait)
 
 import '~/plugins'
-// import '~/components'
 
 Vue.config.productionTip = false
 

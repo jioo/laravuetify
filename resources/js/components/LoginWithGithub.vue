@@ -36,7 +36,7 @@ export default {
     async login () {
       const newWindow = openWindow('', 'login')
 
-      const url = await this.$store.dispatch('fetchOauthUrl', {
+      const url = await this.$store.dispatch('FETCH_OAUTH_URL', {
         provider: 'github'
       })
 
@@ -51,7 +51,7 @@ export default {
         return
       }
 
-      this.$store.dispatch('saveToken', {
+      this.$store.dispatch('SAVE_TOKEN', {
         token: e.data.token
       })
 

@@ -3,7 +3,6 @@ import axios from 'axios'
 import store from '~/store'
 import router from '~/router'
 import swal from 'sweetalert2'
-import { EventBus } from '../event-bus'
 
 const _axios = axios.create(config)
 
@@ -62,8 +61,7 @@ _axios.interceptors.response.use(response => response, error => {
       message += `${object[key][0]}<br/>`
     }
 
-    EventBus.$emit('bad-request', message)
-    EventBus.$emit('add-movie');
+    store.dispatch('OPEN_ALERT_MESSAGE', message)
   }
 
   return Promise.reject(error)
