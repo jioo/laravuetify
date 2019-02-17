@@ -130,7 +130,7 @@ export default {
       await this.$store.dispatch('FETCH_USER')
 
       // Redirect home.
-      this.$router.push({ name: 'dashboard' })
+      this.$router.push('/dashboard')
         
       } 
       catch (error) { } 

@@ -19,25 +19,16 @@
           color="white"
         >
           <v-img
-            :src="'//logo.clearbit.com/spotify.com'"
+            :src="'/img/vuetifylogo.png'"
             height="34"
             contain
           />
         </v-list-tile-avatar>
         <v-list-tile-title class="title">
-          Vuetify MD
+          LaraVuetify
         </v-list-tile-title>
       </v-list-tile>
       <v-divider/>
-      <v-list-tile
-        v-if="responsive"
-      >
-        <v-text-field
-          class="purple-input search-input"
-          label="Search..."
-          color="purple"
-        />
-      </v-list-tile>
       <v-list-tile
         v-for="(link, i) in links"
         :key="i"
@@ -67,15 +58,34 @@ export default {
       {
         to: '/dashboard',
         icon: 'mdi-view-dashboard',
-        text: 'Dashboard',
+        text: 'Dashboard'
       },
       {
-        to: '/profile',
-        icon: 'mdi-view-dashboard',
-        text: 'Profile',
+        to: '/table-list',
+        icon: 'mdi-clipboard-outline',
+        text: 'Table List'
+      },
+      {
+        to: '/typography',
+        icon: 'mdi-format-font',
+        text: 'Typography'
+      },
+      {
+        to: '/icons',
+        icon: 'mdi-chart-bubble',
+        text: 'Icons'
+      },
+      {
+        to: '/maps',
+        icon: 'mdi-map-marker',
+        text: 'Maps'
+      },
+      {
+        to: '/notifications',
+        icon: 'mdi-bell',
+        text: 'Notifications'
       }
     ],
-    responsive: false,
   }),
 
   computed: {
@@ -89,26 +99,6 @@ export default {
         this.$store.dispatch('UPDATE_DRAWER', val)
       }
     },
-  },
-
-  methods: {
-
-    onResponsiveInverted () {
-      if (window.innerWidth < 991) {
-        this.responsive = true
-      } else {
-        this.responsive = false
-      }
-    }
-  },
-
-  mounted () {
-    this.onResponsiveInverted()
-    window.addEventListener('resize', this.onResponsiveInverted)
-  },
-  
-  beforeDestroy () {
-    window.removeEventListener('resize', this.onResponsiveInverted)
   },
   
 }

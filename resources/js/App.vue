@@ -22,7 +22,6 @@ export default {
 
     return {
       title: appName,
-      titleTemplate: `%s · ${appName}`
     }
   },
 

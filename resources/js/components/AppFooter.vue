@@ -4,7 +4,6 @@
     absolute
     height="82"
   >
-    <v-spacer/>
     <span class="font-weight-light copyright">
       <v-icon color="tertiary" size="20">mdi-code-tags</v-icon>
       with
@@ -12,7 +11,10 @@
       by
       <a href="https://jioo.github.io" target="_blank">Justine Joshua Quiazon</a>
       &copy;
-      {{ (new Date()).getFullYear() }},
+      {{ (new Date()).getFullYear() }}
+    </span>
+    <v-spacer/>
+    <span class="font-weight-light copyright">
       Design from 
       <a href="https://www.creative-tim.com/" target="_blank">Creative Tim</a>
     </span>

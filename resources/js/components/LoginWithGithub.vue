@@ -53,7 +53,7 @@ export default {
         token: e.data.token
       })
 
-      this.$router.push({ name: 'dashboard' })
+      this.$router.push('/dashboard')
     }
   }
 }
