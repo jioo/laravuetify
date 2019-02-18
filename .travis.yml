@@ -1,0 +1,25 @@
+language: php
+
+php:
+  - 7.1
+  - 7.2
+
+before_script:
+  - cp .env.travis .env
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+  - php artisan key:generate
+  - php artisan jwt:secret
+  - php artisan migrate --seed
+
+before_install:
+  - mysql -e 'CREATE DATABASE laravuetify_db;'
+
+script:
+  - vendor/bin/phpunit
+
+services:
+  - mysql
+
+notifications:
+  email: false
