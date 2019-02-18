@@ -6,6 +6,7 @@
           <material-card
             color="primary"
             title="Register"
+            historyPath="/login"
           >
             <!-- Error messages -->
             <v-card-text v-if="alert.show">
@@ -20,10 +21,10 @@
             <form>
               <v-card-text>
                 <!-- Name -->
-                <v-text-field 
+                <v-text-field
                   type="text"
-                  label="Name" 
-                  prepend-icon="person" 
+                  label="Name"
+                  prepend-icon="person"
                   v-model="form.name"
                   data-vv-name="Name"
                   v-validate="'required'"
@@ -32,10 +33,10 @@
                 ></v-text-field>
 
                 <!-- Email -->
-                <v-text-field 
+                <v-text-field
                   type="text"
-                  label="Email" 
-                  prepend-icon="mail" 
+                  label="Email"
+                  prepend-icon="mail"
                   v-model="form.email"
                   data-vv-name="Email"
                   v-validate="'required|email'"
@@ -43,10 +44,10 @@
                 ></v-text-field>
 
                 <!-- Password -->
-                <v-text-field 
+                <v-text-field
                   type="password"
-                  label="Password" 
-                  prepend-icon="lock" 
+                  label="Password"
+                  prepend-icon="lock"
                   v-model="form.password"
                   data-vv-name="Password"
                   v-validate="'required|min:6'"
@@ -54,31 +55,23 @@
                 ></v-text-field>
 
                 <!-- Confirm Password -->
-                <v-text-field 
+                <v-text-field
                   type="password"
-                  label="Confirm Password" 
-                  prepend-icon="lock" 
+                  label="Confirm Password"
+                  prepend-icon="lock"
                   v-model="form.password_confirmation"
                   data-vv-name="Confirm Password"
                   v-validate="'required'"
                   :error-messages="errors.collect('Confirm Password')"
                 ></v-text-field>
 
-                <v-btn 
-                  block   
-                  type="button" 
-                  color="success" 
+                <v-btn
+                  block
+                  type="button"
+                  color="success"
                   @click.prevent="submit()"
                   :loading="$wait.any"
                 >Register</v-btn>
-
-                <v-btn 
-                  color="default"
-                  block   
-                  type="button" 
-                  :loading="$wait.any"
-                  :to="'/login'"
-                >Cancel</v-btn>
 
               </v-card-text>
 
@@ -118,14 +111,14 @@ export default {
         // Check if all fields are valid
         if (this.errors.items.length === 0) {
           this.register()
-        } 
+        }
       })
     },
 
     register () {
       // Start loading
       this.$wait.start()
-      
+
       // Submit the form.
       this.$axios.post('/api/register', this.form).then(res => {
         const { data } = res
@@ -154,7 +147,7 @@ export default {
         this.$router.push('/dashboard')
       })
     }
-    
+
   },
 }
 </script>

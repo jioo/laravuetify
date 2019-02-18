@@ -6,6 +6,7 @@
           <material-card
             color="primary"
             title="Forgot Password"
+            historyPath="/login"
           >
 
             <!-- Error messages -->
@@ -21,10 +22,10 @@
             <form>
               <v-card-text>
                 <!-- Email -->
-                <v-text-field 
+                <v-text-field
                   type="text"
-                  label="Email" 
-                  prepend-icon="mail" 
+                  label="Email"
+                  prepend-icon="mail"
                   v-model="form.email"
                   data-vv-name="Email"
                   v-validate="'required|email'"
@@ -32,22 +33,14 @@
                   mt-3
                 ></v-text-field>
 
-                <!-- Login button -->
-                <v-btn 
-                  block 
-                  type="button" 
-                  color="primary" 
+                <!-- Submit button -->
+                <v-btn
+                  block
+                  type="button"
+                  color="primary"
                   @click.prevent="submit()"
                   :loading="isLoading"
                 >Reset</v-btn>
-
-                <v-btn 
-                  block   
-                  color="default"
-                  type="button" 
-                  :loading="isLoading"
-                  :to="'/login'"
-                >Cancel</v-btn>
 
               </v-card-text>
             </form>
@@ -81,7 +74,7 @@ export default {
         // Check if all fields are valid
         if (this.errors.items.length === 0) {
           this.postRequest()
-        } 
+        }
       })
     },
 
@@ -90,7 +83,7 @@ export default {
         const { data } = res
 
         this.resetForm()
-        
+
         this.$notify({ type: 'success', text: data.status })
       })
     },
@@ -104,7 +97,7 @@ export default {
     created () {
       this.resetForm()
     }
-    
+
   },
 }
 </script>

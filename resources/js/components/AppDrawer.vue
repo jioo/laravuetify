@@ -29,21 +29,26 @@
         </v-list-tile-title>
       </v-list-tile>
       <v-divider/>
-      <v-list-tile
+
+      <template
         v-for="(link, i) in links"
-        :key="i"
-        :to="link.to"
-        :active-class="'blue darken-2'"
-        avatar
-        class="v-list-item"
       >
-        <v-list-tile-action>
-          <v-icon>{{ link.icon }}</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-title
-          v-text="link.text"
-        />
-      </v-list-tile>
+        <v-list-tile
+          :key="i"
+          :to="link.to"
+          :active-class="'blue darken-2'"
+          avatar
+          class="v-list-item"
+          v-show="(link.meta === undefined) ? true : link.meta "
+        >
+          <v-list-tile-action>
+            <v-icon>{{ link.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title
+            v-text="link.text"
+          />
+        </v-list-tile>
+      </template>
     </v-layout>
   </v-navigation-drawer>
 </template>
@@ -54,37 +59,11 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data: () => ({
     logo: './img/vuetifylogo.png',
-    links: [
-      {
-        to: '/dashboard',
-        icon: 'mdi-view-dashboard',
-        text: 'Dashboard'
-      },
-      {
-        to: '/table-list',
-        icon: 'mdi-clipboard-outline',
-        text: 'Table List'
-      },
-      {
-        to: '/icons',
-        icon: 'mdi-chart-bubble',
-        text: 'Icons'
-      },
-      {
-        to: '/maps',
-        icon: 'mdi-map-marker',
-        text: 'Maps'
-      },
-      {
-        to: '/notifications',
-        icon: 'mdi-bell',
-        text: 'Notifications'
-      }
-    ],
+    links: [],
   }),
 
   computed: {
-    ...mapGetters(['drawer']),
+    ...mapGetters(['drawer', 'isAdmin']),
 
     drawerValue: {
       get () {
@@ -95,6 +74,37 @@ export default {
       }
     },
   },
-  
+
+  created () {
+    this.links = [
+      {
+        to: '/dashboard',
+        icon: 'mdi-view-dashboard',
+        text: 'Dashboard',
+      },
+      {
+        to: '/table-list',
+        icon: 'mdi-clipboard-outline',
+        text: 'Table List [Admin only]',
+        meta: this.isAdmin,
+      },
+      {
+        to: '/icons',
+        icon: 'mdi-chart-bubble',
+        text: 'Icons [Admin only]',
+        meta: this.isAdmin,
+      },
+      {
+        to: '/maps',
+        icon: 'mdi-map-marker',
+        text: 'Maps',
+      },
+      {
+        to: '/notifications',
+        icon: 'mdi-bell',
+        text: 'Notifications',
+      }
+    ]
+  }
 }
 </script>

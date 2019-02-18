@@ -35,6 +35,11 @@ npm i
 ```
 
 ### Run ###
+- **Admin** account:
+    - email: `admin@gmail.com`, password: `123456`
+- **User** account:
+    - email: `jdoe@gmail.com`, password: `123456`
+
 ```bash
 # Start the local development server: http://127.0.0.1:8000
 php artisan serve

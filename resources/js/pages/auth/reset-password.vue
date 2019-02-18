@@ -21,19 +21,19 @@
               <v-card-text>
 
                 <!-- Email -->
-                <v-text-field 
+                <v-text-field
                   type="text"
-                  label="Email" 
-                  prepend-icon="mail" 
+                  label="Email"
+                  prepend-icon="mail"
                   v-model="form.email"
                   readonly
                 ></v-text-field>
 
                 <!-- Password -->
-                <v-text-field 
+                <v-text-field
                   type="password"
-                  label="Password" 
-                  prepend-icon="lock" 
+                  label="Password"
+                  prepend-icon="lock"
                   v-model="form.password"
                   data-vv-name="Password"
                   v-validate="'required|min:6'"
@@ -41,20 +41,21 @@
                 ></v-text-field>
 
                 <!-- Confirm Password -->
-                <v-text-field 
+                <v-text-field
                   type="password"
-                  label="Confirm Password" 
-                  prepend-icon="lock" 
+                  label="Confirm Password"
+                  prepend-icon="lock"
                   v-model="form.password_confirmation"
                   data-vv-name="Confirm Password"
                   v-validate="'required'"
                   :error-messages="errors.collect('Confirm Password')"
                 ></v-text-field>
 
-                <v-btn 
-                  block   
-                  type="button" 
-                  color="success" 
+                <!-- Submit button -->
+                <v-btn
+                  block
+                  type="button"
+                  color="success"
                   @click.prevent="submit()"
                   :loading="isLoading"
                 >Reset Password</v-btn>
@@ -92,14 +93,14 @@ export default {
         // Check if all fields are valid
         if (this.errors.items.length === 0) {
           this.postRequest()
-        } 
+        }
       })
     },
 
     postRequest () {
       this.$axios.post('/api/password/reset', this.form).then(res => {
         const { data } = res
-        
+
         this.$notify({ type: 'success', text: data.status })
         this.$router.push('/login')
       })
@@ -118,7 +119,7 @@ export default {
       this.form.email = this.$route.query.email
       this.form.token = this.$route.params.token
     },
-    
+
   },
 
   created () {

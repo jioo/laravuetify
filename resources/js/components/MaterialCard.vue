@@ -17,20 +17,27 @@
         class="v-card--material__header"
         dark
       >
-        <slot
-          v-if="!title && !text"
-          name="header"
-        />
-        <span v-else>
-          <h4
-            class="title font-weight-light mb-2"
-            v-text="title"
+        <v-layout row wrap pa-3>
+          <v-icon
+            v-show="!!historyPath"
+            v-ripple
+            color="tertiary"
+            @click.prevent="redirect(historyPath)" >mdi-arrow-left</v-icon>
+          <slot
+            v-if="!title && !text"
+            name="header"
           />
-          <p
-            class="category font-weight-thin"
-            v-text="text"
-          />
-        </span>
+          <span v-else>
+            <h4
+              class="title font-weight-light mb-2"
+              v-text="title"
+            />
+            <p
+              class="category font-weight-thin"
+              v-text="text"
+            />
+          </span>
+        </v-layout>
       </v-card>
       <slot
         v-else
@@ -86,6 +93,10 @@ export default {
     text: {
       type: String,
       default: undefined
+    },
+    historyPath: {
+      type: String,
+      default: ''
     }
   },
 
@@ -104,6 +115,21 @@ export default {
         marginTop: `${this.offset * 2}px`
       }
     }
+  },
+
+  methods: {
+    redirect (url) {
+      this.$router.push(url)
+    }
   }
 }
 </script>
+
+<style scoped>
+i.v-icon {
+  margin-right: 12px;
+  margin-bottom: 6px;
+  border-radius: 40px;
+}
+</style>
+
