@@ -66,7 +66,7 @@ npm run production
     - Update the email config in .env file with your gmail account
     ![Gmail Config](docs/gmail-config.jpg)
     - Allow your account to less secure app access
-    ![Allow less secure app access](docs/gmail-allow-less-secure-apps.jpg)
+    ![Allow less secure app access](docs/gmail-allow-less-secure-apps.png)
 3. Run `php artisan config:cache` after updating your .env file. 
 4. It's recommended to have a clean database before seeding. You can refresh your migrations at any point to clean the database by running `php artisan migrate:fresh --seed`
 
