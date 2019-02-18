@@ -6,8 +6,10 @@ use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
-    public function setUp() {
+    public function setUp() 
+    {
         parent::setUp();
+
         $this->artisan('db:seed');
     }
 
@@ -21,6 +23,6 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'secret',
         ])
         ->assertSuccessful()
-        ->assertJsonStructure(['id', 'name', 'email']);
+        ->assertJsonStructure(['id', 'name', 'email', 'role']);
     }
 }

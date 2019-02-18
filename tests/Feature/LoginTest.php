@@ -14,8 +14,9 @@ class LoginTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
         $this->artisan('db:seed');
+
+        $this->user = User::first();
     }
 
     /** @test */
@@ -23,7 +24,7 @@ class LoginTest extends TestCase
     {
         $this->postJson('/api/login', [
             'email' => $this->user->email,
-            'password' => 'secret',
+            'password' => '123456',
         ])
         ->assertSuccessful()
         ->assertJsonStructure(['token', 'expires_in'])
@@ -36,7 +37,7 @@ class LoginTest extends TestCase
         $this->actingAs($this->user)
             ->getJson('/api/user')
             ->assertSuccessful()
-            ->assertJsonStructure(['id', 'name', 'email']);
+            ->assertJsonStructure(['id', 'name', 'email', 'role']);
     }
 
     /** @test */
@@ -44,7 +45,7 @@ class LoginTest extends TestCase
     {
         $token = $this->postJson('/api/login', [
             'email' => $this->user->email,
-            'password' => 'secret',
+            'password' => '123456',
         ])->json()['token'];
 
         $this->postJson("/api/logout?token=$token")

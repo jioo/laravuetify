@@ -16,6 +16,8 @@ class OAuthTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        
+        $this->artisan('db:seed');
 
         TestResponse::macro('assertText', function ($text) {
             PHPUnit::assertTrue(str_contains($this->getContent(), $text), "Expected text [{$text}] not found.");
@@ -28,7 +30,6 @@ class OAuthTest extends TestCase
 
             return $this;
         });
-        $this->artisan('db:seed');
     }
 
     /** @test */
@@ -63,7 +64,6 @@ class OAuthTest extends TestCase
             'email' => 'test@example.com',
         ]);
         
-        $dateTimeNow = Carbon::now()->toDateTimeString();
         $this->assertDatabaseHas('oauth_providers', [
             'user_id' => User::orderBy('id', 'desc')->first()->id,
             'provider' => 'github',
