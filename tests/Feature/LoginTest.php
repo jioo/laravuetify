@@ -15,6 +15,7 @@ class LoginTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
+        $this->artisan('db:seed');
     }
 
     /** @test */

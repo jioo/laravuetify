@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\User;
+use Carbon\Carbon;
 use Mockery as m;
 use Tests\TestCase;
 use Laravel\Socialite\Facades\Socialite;
@@ -27,6 +28,7 @@ class OAuthTest extends TestCase
 
             return $this;
         });
+        $this->artisan('db:seed');
     }
 
     /** @test */
@@ -60,9 +62,10 @@ class OAuthTest extends TestCase
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
-
+        
+        $dateTimeNow = Carbon::now()->toDateTimeString();
         $this->assertDatabaseHas('oauth_providers', [
-            'user_id' => User::first()->id,
+            'user_id' => User::orderBy('id', 'desc')->first()->id,
             'provider' => 'github',
             'provider_user_id' => '123',
             'access_token' => 'access-token',

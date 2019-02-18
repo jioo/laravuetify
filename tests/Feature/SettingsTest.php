@@ -8,14 +8,15 @@ use Illuminate\Support\Facades\Hash;
 
 class SettingsTest extends TestCase
 {
-    /** @var \App\User */
+    // /** @var \App\User */
     protected $user;
 
     public function setUp()
     {
         parent::setUp();
-
-        $this->user = factory(User::class)->create();
+        
+        $this->artisan('db:seed');
+        $this->user = User::first();
     }
 
     /** @test */
