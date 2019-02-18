@@ -8,6 +8,9 @@ This Project is based on
 - [cretueusebiu/laravel-vue-spa](https://github.com/cretueusebiu/laravel-vue-spa)
 - [creativetimofficial/vuetify-material-dashboard](https://github.com/creativetimofficial/vuetify-material-dashboard)
 
+### Quick Demo ###
+![App Demo](docs/app-demo.gif)
+
 ### Prerequisite ###
 1. Install Composer [https://getcomposer.org/download/](https://getcomposer.org/download/)
 2. Install Node.js [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
