@@ -11,6 +11,7 @@
             <!-- Error messages -->
             <v-card-text v-if="alert.show">
               <v-alert
+                :value="true"
                 color="error"
                 v-html="alert.message"
               >
@@ -112,34 +113,6 @@ export default {
   },
 
   methods: {
-    async login () {
-      try {
-      // Start loading
-      this.$wait.start();
-      
-      // Submit the form.
-      const { data } = await this.$axios.post('/api/login', this.form)
-
-      // Save the token.
-      this.$store.dispatch('SAVE_TOKEN', {
-        token: data.token,
-        remember: this.remember
-      })
-
-      // Fetch the user.
-      await this.$store.dispatch('FETCH_USER')
-
-      // Redirect home.
-      this.$router.push('/dashboard')
-        
-      } 
-      catch (error) { } 
-      finally { 
-        // End loading
-        this.$wait.end() 
-      }
-    },
-
     submit () {
       this.$store.dispatch('CLOSE_ALERT_MESSAGE')
 
@@ -150,8 +123,38 @@ export default {
         } 
       })
     },
+
+    login () {
+      // Start loading
+      this.$wait.start()
+      
+      // Submit the form.
+      this.$axios.post('/api/login', this.form).then(res => {
+        const { data } = res
+
+        // Save the token.
+        this.$store.dispatch('SAVE_TOKEN', {
+          token: data.token,
+          remember: this.remember
+        })
+
+        this.fetchUserThenRedirect()
+
+      }).catch(err => {
+        this.$wait.end()
+      })
+    },
+
+    fetchUserThenRedirect () {
+      this.$store.dispatch('FETCH_USER').then(() => {
+        // Redirect to dashboard
+        this.$router.push('/dashboard')
+
+        // End loading
+        this.$wait.end()
+      })
+    },
+    
   },
-
-
 }
 </script>

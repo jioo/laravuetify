@@ -19,7 +19,7 @@
           <h4 class="title font-weight-light">Daily Sales</h4>
           <p class="category d-inline-flex font-weight-light">
             <v-icon
-              color="green"
+              color="primary"
               small
             >
               mdi-arrow-up
@@ -73,7 +73,7 @@
         <material-chart-card
           :data="dataCompletedTasksChart.data"
           :options="dataCompletedTasksChart.options"
-          color="green"
+          color="primary"
           type="Line"
         >
           <h3 class="title font-weight-light">Completed Tasks</h3>
@@ -97,7 +97,7 @@
         lg3
       >
         <material-stats-card
-          color="green"
+          color="primary"
           icon="mdi-store"
           title="Revenue"
           value="$34,245"
@@ -195,7 +195,7 @@
       >
         <material-card
           class="card-tabs"
-          color="green">
+          color="primary">
           <v-flex
             slot="header"
           >
@@ -233,7 +233,7 @@
                   <v-list-tile-action>
                     <v-checkbox
                       :value="list[0]"
-                      color="green"
+                      color="primary"
                     />
                   </v-list-tile-action>
                   <v-list-tile-title>

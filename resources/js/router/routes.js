@@ -10,12 +10,14 @@ export default [
       { path: 'user-profile', name: 'User Profile', component: () => import('~/pages/user-profile').then(m => m.default || m) },
       { path: 'user-password', name: 'Change Password', component: () => import('~/pages/user-password').then(m => m.default || m) },
       { path: 'table-list', name: 'Table List', component: () => import('~/pages/table-list').then(m => m.default || m) },
-      { path: 'typography', name: 'Typography', component: () => import('~/pages/typography').then(m => m.default || m) },
       { path: 'icons', name: 'Icons', component: () => import('~/pages/icons').then(m => m.default || m) },
       { path: 'maps', name: 'Maps', component: () => import('~/pages/maps').then(m => m.default || m) },
       { path: 'notifications', name: 'Notifications', component: () => import('~/pages/notifications').then(m => m.default || m) },
     ],
-  }
+  },
+
+  { path: '*', component: () => import('~/pages/login').then(m => m.default || m) }
+
   // { path: '/', name: 'welcome', component: Welcome },
 
   // { path: '/login', name: 'login', component: Login },
@@ -33,6 +35,4 @@ export default [
   //     { path: 'password', name: 'settings.password', component: SettingsPassword }
   //   ]
   // },
-
-  // { path: '*', component: NotFound }
 ]

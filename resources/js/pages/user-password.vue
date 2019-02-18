@@ -9,7 +9,7 @@
     >
       <v-flex md12>
 
-        <material-card color="green" title="Change Password">
+        <material-card color="primary" title="Change Password">
           <form>
             <v-container>
               <v-layout row wrap justify-center>
@@ -27,7 +27,7 @@
                 <!-- Old Password -->
                 <v-flex md8 xs12>
                   <v-text-field 
-                    type="text"
+                    type="password"
                     label="Old Password" 
                     v-model="form.old_password"
                     v-validate="'required'"
@@ -40,7 +40,7 @@
                 <!-- New Password -->
                 <v-flex md8 xs12>
                   <v-text-field 
-                    type="text"
+                    type="password"
                     label="New Password" 
                     v-model="form.password"
                     v-validate="'required|min:6'"
@@ -53,7 +53,7 @@
                 <!-- Confirm Password -->
                 <v-flex md8 xs12>
                   <v-text-field 
-                    type="text"
+                    type="password"
                     label="Confirm Password" 
                     v-model="form.password_confirmation"
                     v-validate="'required'"
@@ -70,7 +70,7 @@
                     type="button" 
                     color="success" 
                     @click.prevent="submit()"
-                    :loading="$wait.any"
+                    :loading="isLoading"
                   >Submit</v-btn>
                 </v-flex>
 
@@ -95,35 +95,10 @@ export default {
   }),
 
   computed: {
-    ...mapGetters(['alert']),
+    ...mapGetters(['alert', 'isLoading']),
   },
 
   methods: {
-    resetForm () {
-      this.form = {
-        old_password: '',
-        password: '',
-        password_confirmation: ''
-      }
-    },
-
-    async changePassword () {
-      try {
-        // Start loading
-        this.$wait.start()
-        
-        await this.$axios.patch('/api/settings/password', this.form)
-
-        this.resetForm()
-        this.$notify({ type: 'success', text: 'Your password has been successfully updated' })
-        
-      } catch (error) { } 
-      finally {
-        // End loading
-        this.$wait.end() 
-      }
-    },
-
     submit () {
       this.$store.dispatch('CLOSE_ALERT_MESSAGE')
 
@@ -134,10 +109,26 @@ export default {
         } 
       })
     },
+
+    changePassword () {
+      this.$axios.patch('/api/settings/password', this.form).then(() => {
+        this.resetForm()
+        this.$notify({ type: 'success', text: 'Your password has been successfully updated' })
+      })
+    },
+    
+    resetForm () {
+      this.form = {
+        old_password: '',
+        password: '',
+        password_confirmation: ''
+      }
+    },
+
   },
 
   created () {
     this.resetForm()
-  }
+  },
 }
 </script>

@@ -66,11 +66,6 @@ export default {
         text: 'Table List'
       },
       {
-        to: '/typography',
-        icon: 'mdi-format-font',
-        text: 'Typography'
-      },
-      {
         to: '/icons',
         icon: 'mdi-chart-bubble',
         text: 'Icons'

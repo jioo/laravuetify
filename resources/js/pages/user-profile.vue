@@ -9,7 +9,7 @@
     >
       <!-- Edit Profile -->
       <v-flex md12>
-        <material-card color="green" title="Edit Profile">
+        <material-card color="primary" title="Edit Profile">
           <form>
             <v-container>
               <v-layout row wrap justify-center>
@@ -42,7 +42,7 @@
                     type="button" 
                     color="success" 
                     @click.prevent="submit()"
-                    :loading="$wait.any"
+                    :loading="isLoading"
                   >Submit</v-btn>
                 </v-flex>
 
@@ -70,26 +70,10 @@ export default {
   }),
 
   computed: {
-    ...mapGetters(['user', 'alert']),
+    ...mapGetters(['user', 'alert', 'isLoading']),
   },
 
   methods: {
-    async updateProfile () {
-      try {
-        // Start loading
-        this.$wait.start()
-        
-        const { data } = await this.$axios.patch('/api/settings/profile', this.form)
-        
-        this.$store.dispatch('updateUser', { user: data })
-        
-      } catch (error) { } 
-      finally {
-        // End loading
-        this.$wait.end() 
-      }
-    },
-
     submit () {
       this.$store.dispatch('CLOSE_ALERT_MESSAGE')
 
@@ -99,7 +83,17 @@ export default {
           this.updateProfile()
         } 
       })
-    }
+    },
+
+    updateProfile () {
+      this.$axios.patch('/api/settings/profile', this.form).then(res => {
+        // Apply updated profile in store
+        const { data } = res 
+        this.$store.dispatch('updateUser', { user: data })
+
+        this.$notify({ type: 'success', text: 'Your profile has been successfully updated' })
+      })
+    },
   },
 
   mounted () {

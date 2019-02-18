@@ -32,6 +32,7 @@
         <span class="font-weight-light text-truncate" v-text="(user) ? user.name : ''">
         </span>
         <v-menu
+          attach
           bottom
           left
           content-class="dropdown-menu"
