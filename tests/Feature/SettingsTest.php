@@ -41,6 +41,7 @@ class SettingsTest extends TestCase
     {
         $this->actingAs($this->user)
             ->patchJson('/api/settings/password', [
+                'old_password' => '123456',
                 'password' => 'updated',
                 'password_confirmation' => 'updated',
             ])

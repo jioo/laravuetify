@@ -1,7 +1,7 @@
 {
-    "name": "cretueusebiu/laravel-vue-spa",
-    "description": "A Laravel-Vue SPA starter project template.",
-    "keywords": ["spa", "laravel", "vue"],
+    "name": "jioo/laravuetify",
+    "description": "Laravel-Vuetify starter project",
+    "keywords": ["spa", "laravel", "vue", "vuetify"],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -11,8 +11,7 @@
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "spatie/laravel-permission": "^2.31",
-        "tymon/jwt-auth": "^1.0.0-rc.2",
-        "webpatser/laravel-uuid": "3.0"
+        "tymon/jwt-auth": "^1.0.0-rc.2"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
@@ -34,13 +33,6 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": [
-              "laravel/dusk"
-            ]
         }
     },
     "scripts": {
