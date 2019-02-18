@@ -5,8 +5,8 @@ Laravel + Vuetify starter template
 [![Build Status](https://img.shields.io/travis/jioo/laravuetify/master.svg)](https://travis-ci.org/jioo/laravuetify) [![paypal](https://img.shields.io/badge/paypal-donate-green.svg)](http://paypal.me/jjquiazon)
 
 This Project is based on 
-    - [cretueusebiu/laravel-vue-spa](https://github.com/cretueusebiu/laravel-vue-spa)
-    - [creativetimofficial/vuetify-material-dashboard](https://github.com/creativetimofficial/vuetify-material-dashboard)
+- [cretueusebiu/laravel-vue-spa](https://github.com/cretueusebiu/laravel-vue-spa)
+- [creativetimofficial/vuetify-material-dashboard](https://github.com/creativetimofficial/vuetify-material-dashboard)
 
 ### Prerequisite ###
 1. Install Composer [https://getcomposer.org/download/](https://getcomposer.org/download/)
