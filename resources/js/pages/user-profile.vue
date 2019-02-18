@@ -89,15 +89,15 @@ export default {
       this.$axios.patch('/api/settings/profile', this.form).then(res => {
         // Apply updated profile in store
         const { data } = res 
-        this.$store.dispatch('updateUser', { user: data })
+        this.$store.dispatch('UPDATE_USER', { user: data })
 
         this.$notify({ type: 'success', text: 'Your profile has been successfully updated' })
       })
     },
   },
 
-  mounted () {
-    this.form = this.user
+  created () {
+    this.form = Object.assign({}, this.user)
   }
 }
 </script>

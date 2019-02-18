@@ -19,17 +19,6 @@
 
             <form>
               <v-card-text>
-                <!-- Name -->
-                <v-text-field 
-                  type="text"
-                  label="Name" 
-                  prepend-icon="person" 
-                  v-model="form.name"
-                  data-vv-name="Name"
-                  v-validate="'required'"
-                  :error-messages="errors.collect('Name')"
-                  mt-3
-                ></v-text-field>
 
                 <!-- Email -->
                 <v-text-field 
@@ -37,9 +26,7 @@
                   label="Email" 
                   prepend-icon="mail" 
                   v-model="form.email"
-                  data-vv-name="Email"
-                  v-validate="'required|email'"
-                  :error-messages="errors.collect('Email')"
+                  readonly
                 ></v-text-field>
 
                 <!-- Password -->
@@ -69,16 +56,8 @@
                   type="button" 
                   color="success" 
                   @click.prevent="submit()"
-                  :loading="$wait.any"
-                >Register</v-btn>
-
-                <v-btn 
-                  color="default"
-                  block   
-                  type="button" 
-                  :loading="$wait.any"
-                  :to="'/login'"
-                >Cancel</v-btn>
+                  :loading="isLoading"
+                >Reset Password</v-btn>
 
               </v-card-text>
 
@@ -98,16 +77,11 @@ export default {
 	middleware: 'guest',
 
   data: () => ({
-    form: {
-      name: '',
-      email: '',
-      password: '',
-      password_confirmation: ''
-    },
+    form: {},
   }),
 
   computed: {
-    ...mapGetters(['alert'])
+    ...mapGetters(['alert', 'isLoading'])
   },
 
   methods: {
@@ -117,44 +91,39 @@ export default {
       this.$validator.validateAll().then(() => {
         // Check if all fields are valid
         if (this.errors.items.length === 0) {
-          this.register()
+          this.postRequest()
         } 
       })
     },
 
-    register () {
-      // Start loading
-      this.$wait.start()
-      
-      // Submit the form.
-      this.$axios.post('/api/register', this.form).then(res => {
+    postRequest () {
+      this.$axios.post('/api/password/reset', this.form).then(res => {
         const { data } = res
-
-        this.loginUser(data)
-        this.$wait.end()
-
-      }).catch(err => {
-        this.$wait.end()
+        
+        this.$notify({ type: 'success', text: data.status })
+        this.$router.push('/login')
       })
     },
 
-    loginUser (registerResponse) {
-      this.$axios.post('/api/login', this.form).then(res => {
-        const { data: { token } } = res
-
-        // Save the token.
-        this.$store.dispatch('SAVE_TOKEN', { token })
-
-        this.updateCurrentUser(registerResponse)
-      })
+    resetForm () {
+      this.form = {
+        token: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      }
     },
 
-    updateCurrentUser (data) {
-      this.$store.dispatch('UPDATE_USER', { user: data }).then(() => {
-        this.$router.push('/dashboard')
-      })
-    }
+    getQueryParams () {
+      this.form.email = this.$route.query.email
+      this.form.token = this.$route.params.token
+    },
     
   },
+
+  created () {
+    this.resetForm()
+    this.getQueryParams()
+  }
 }
 </script>

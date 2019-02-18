@@ -1,97 +1,166 @@
 <template>
-  <div class="row">
-    <div class="col-lg-8 m-auto">
-      <card :title="'login'">
-        <form @submit.prevent="login" @keydown="form.onKeydown($event)">
-          <!-- Email -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ 'email' }}</label>
-            <div class="col-md-7">
-              <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="email" name="email">
-              <has-error :form="form" field="email" />
-            </div>
-          </div>
+  <v-content>
+    <v-container fluid fill-height>
+      <v-layout justify-center>
+        <v-flex xs12 sm8 md4>
+          <material-card
+            color="primary"
+            title="Login Form"
+          >
 
-          <!-- Password -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ 'password' }}</label>
-            <div class="col-md-7">
-              <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
-              <has-error :form="form" field="password" />
-            </div>
-          </div>
+            <!-- Error messages -->
+            <v-card-text v-if="alert.show">
+              <v-alert
+                :value="true"
+                color="error"
+                v-html="alert.message"
+              >
+              </v-alert>
+            </v-card-text>
 
-          <!-- Remember Me -->
-          <div class="form-group row">
-            <div class="col-md-3" />
-            <div class="col-md-7 d-flex">
-              <checkbox v-model="remember" name="remember">
-                {{ 'remember_me' }}
-              </checkbox>
+            <form>
+              <v-card-text>
+                <!-- Email -->
+                <v-text-field 
+                  type="text"
+                  label="Email" 
+                  prepend-icon="mail" 
+                  v-model="form.email"
+                  data-vv-name="Email"
+                  v-validate="'required|email'"
+                  :error-messages="errors.collect('Email')"
+                  mt-3
+                ></v-text-field>
 
-              <router-link :to="{ name: 'password.request' }" class="small ml-auto my-auto">
-                {{ 'forgot_password' }}
-              </router-link>
-            </div>
-          </div>
+                <!-- Password -->
+                <v-text-field 
+                  type="password"
+                  label="Password" 
+                  prepend-icon="lock" 
+                  v-model="form.password"
+                  data-vv-name="Password"
+                  v-validate="'required'"
+                  :error-messages="errors.collect('Password')"
+                ></v-text-field>
 
-          <div class="form-group row">
-            <div class="col-md-7 offset-md-3 d-flex">
-              <!-- Submit Button -->
-              <v-button :loading="form.busy">
-                {{ 'login' }}
-              </v-button>
+                <!-- Remember me checkbox -->
+                <v-checkbox
+                  label="Remember me" 
+                  v-model="remember"
+                  my-0 
+                ></v-checkbox>
 
-              <!-- GitHub Login Button -->
-              <login-with-github />
-            </div>
-          </div>
-        </form>
-      </card>
-    </div>
-  </div>
+                <v-layout column>
+
+                  <!-- Login button -->
+                  <v-flex mb-2>
+                    <v-btn 
+                      block 
+                      type="button" 
+                      color="primary" 
+                      @click.prevent="submit()"
+                      :loading="$wait.any"
+                    >Login</v-btn>
+                  </v-flex>
+
+                  <v-divider></v-divider>
+
+                  <!-- Facebook login button -->
+                  <v-flex my-2>
+                    <v-btn
+                      block
+                      color="blue"
+                      class="white--text"
+                      :loading="$wait.any"
+                    >
+                      <v-icon left dark>fab fa-facebook</v-icon>
+                      Login with Facebook
+                    </v-btn>
+                  </v-flex>
+
+                  <!-- GitHub login button -->
+                  <login-with-github :loading="$wait.any" />
+
+                </v-layout>
+
+              </v-card-text>
+
+            </form>
+
+          </material-card>
+
+          <p class="text-md-center">
+            <router-link :to="'/register'">Register</router-link>
+            <v-icon color="tertiary" size="17">mdi-circle-medium</v-icon>
+            <router-link :to="'/forgot-password'">Forgot Password</router-link>
+          </p>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
-import Form from 'vform'
-import LoginWithGithub from '~/components/LoginWithGithub'
+import { mapGetters } from 'vuex'
 
 export default {
-  middleware: 'guest',
-
-  components: {
-    LoginWithGithub
-  },
-
-  metaInfo () {
-    return { title: 'login' }
-  },
+	middleware: 'guest',
 
   data: () => ({
-    form: new Form({
+    form: {
       email: '',
-      password: ''
-    }),
+      password: '',
+    },
     remember: false
   }),
 
+  computed: {
+    ...mapGetters(['alert'])
+  },
+
   methods: {
-    async login () {
-      // Submit the form.
-      const { data } = await this.form.post('/api/login')
+    submit () {
+      this.$store.dispatch('CLOSE_ALERT_MESSAGE')
 
-      // Save the token.
-      this.$store.dispatch('saveToken', {
-        token: data.token,
-        remember: this.remember
+      this.$validator.validateAll().then(() => {
+        // Check if all fields are valid
+        if (this.errors.items.length === 0) {
+          this.login()
+        } 
       })
+    },
 
-      // Fetch the user.
-      await this.$store.dispatch('fetchUser')
+    login () {
+      // Start loading
+      this.$wait.start()
+      
+      // Submit the form.
+      this.$axios.post('/api/login', this.form).then(res => {
+        const { data } = res
 
-      // Redirect home.
-      this.$router.push({ name: 'home' })
-    }
-  }
+        // Save the token.
+        this.$store.dispatch('SAVE_TOKEN', {
+          token: data.token,
+          remember: this.remember
+        })
+
+        this.fetchUserThenRedirect()
+
+      }).catch(err => {
+        this.$wait.end()
+      })
+    },
+
+    fetchUserThenRedirect () {
+      this.$store.dispatch('FETCH_USER').then(() => {
+        // Redirect to dashboard
+        this.$router.push('/dashboard')
+
+        // End loading
+        this.$wait.end()
+      })
+    },
+    
+  },
 }
 </script>

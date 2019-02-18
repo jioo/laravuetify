@@ -59,7 +59,7 @@ export const actions = {
   },
 
   UPDATE_USER ({ commit }, payload) {
-    commit(types.UPDATE_USER, payload)
+    commit('UPDATE_USER', payload)
   },
 
   async LOGOUT ({ commit }) {

@@ -7,65 +7,93 @@ import swal from 'sweetalert2'
 const _axios = axios.create(config)
 
 // Request interceptor
-_axios.interceptors.request.use(request => {
-  const 
-    token = store.getters['token'],
-    csrfToken = document.head.querySelector('meta[name="csrf-token"]')
+_axios.interceptors.request.use(
+  // Do something before request is sent
+  request => {
+    const 
+      token = store.getters['token'],
+      csrfToken = document.head.querySelector('meta[name="csrf-token"]')
 
-  if (token)
-    request.headers.common['Authorization'] = `Bearer ${token}`
-  
-  request.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-  request.headers.common['X-CSRF-TOKEN'] = csrfToken.content
+    // Start app loading
+    store.dispatch('LOADING_START')
 
-  // request.headers['X-Socket-Id'] = Echo.socketId()
+    if (token)
+      request.headers.common['Authorization'] = `Bearer ${token}`
+    
+    request.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+    request.headers.common['X-CSRF-TOKEN'] = csrfToken.content
 
-  return request
-})
+    // request.headers['X-Socket-Id'] = Echo.socketId()
+
+    return request
+  },
+
+  // Do something with request error
+  error => {
+    // End app loading
+    store.dispatch('LOADING_END')
+
+    return Promise.reject(error)
+  }
+)
 
 // Response interceptor
-_axios.interceptors.response.use(response => response, error => {
-  const { status } = error.response
+_axios.interceptors.response.use(
 
-  if (status >= 500) {
-    swal({
-      type: 'error',
-      title: 'Oops...',
-      text: 'Something went wrong! Please try again.',
-      reverseButtons: true,
-      confirmButtonText: 'Ok',
-      cancelButtonText: 'Cancel'
-    })
-  }
+  // Do something with response data
+  response => {
+    // End app loading
+    store.dispatch('LOADING_END')
+    return response
+  }, 
 
-  if (status === 401 && store.getters['check']) {
-    swal({
-      type: 'warning',
-      title: 'Session Expired!',
-      text: 'Please log in again to continue.',
-      reverseButtons: true,
-      confirmButtonText: 'Ok',
-      cancelButtonText: 'Cancel'
-    }).then(() => {
-      store.commit('LOGOUT')
+  // Do something with response error
+  error => {
+    // End app loading
+    store.dispatch('LOADING_END')
 
-      router.push({ name: 'login' })
-    })
-  }
+    const { status } = error.response
 
-  if (status === 422) {
-    let message = ''
-    let object = error.response.data.errors
-
-    for(var key in object) {
-      message += `${object[key][0]}<br/>`
+    if (status >= 500) {
+      swal({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong! Please try again.',
+        reverseButtons: true,
+        confirmButtonText: 'Ok',
+        cancelButtonText: 'Cancel'
+      })
     }
 
-    store.dispatch('OPEN_ALERT_MESSAGE', message)
-  }
+    if (status === 401 && store.getters['check']) {
+      swal({
+        type: 'warning',
+        title: 'Session Expired!',
+        text: 'Please log in again to continue.',
+        reverseButtons: true,
+        confirmButtonText: 'Ok',
+        cancelButtonText: 'Cancel'
+      }).then(() => {
+        store.commit('LOGOUT')
 
-  return Promise.reject(error)
-})
+        router.push({ name: 'login' })
+      })
+    }
+
+    if (status === 422) {
+      let message = ''
+      let object = error.response.data.errors
+
+      for(var key in object) {
+        message += `${object[key][0]}<br/>`
+      }
+
+      store.dispatch('OPEN_ALERT_MESSAGE', message)
+    }
+
+    return Promise.reject(error)
+  }
+)
 
 Plugin.install = function (Vue, options) {
   Vue.axios = _axios

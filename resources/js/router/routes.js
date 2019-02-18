@@ -1,5 +1,8 @@
 export default [
-  { path: '/login', name: 'Login', component: () => import('~/pages/login').then(m => m.default || m) },
+  { path: '/login', name: 'Login', component: () => import('~/pages/auth/login').then(m => m.default || m) },
+  { path: '/register', name: 'Register', component: () => import('~/pages/auth/register').then(m => m.default || m) },
+  { path: '/forgot-password', name: 'Forgot Password', component: () => import('~/pages/auth/forgot-password').then(m => m.default || m) },
+  { path: '/password/reset/:token', name: 'Reset Password', component: () => import('~/pages/auth/reset-password').then(m => m.default || m) },
 
   {
     path: '/',
@@ -16,23 +19,5 @@ export default [
     ],
   },
 
-  { path: '*', component: () => import('~/pages/login').then(m => m.default || m) }
-
-  // { path: '/', name: 'welcome', component: Welcome },
-
-  // { path: '/login', name: 'login', component: Login },
-  // { path: '/register', name: 'register', component: Register },
-  // { path: '/password/reset', name: 'password.request', component: PasswordEmail },
-  // { path: '/password/reset/:token', name: 'password.reset', component: PasswordReset },
-
-  // { path: '/home', name: 'home', component: Home },
-  // {
-  //   path: '/settings',
-  //   component: Settings,
-  //   children: [
-  //     { path: '', redirect: { name: 'settings.profile' } },
-  //     { path: 'profile', name: 'settings.profile', component: SettingsProfile },
-  //     { path: 'password', name: 'settings.password', component: SettingsPassword }
-  //   ]
-  // },
+  { path: '*', component: () => import('~/pages/auth/login').then(m => m.default || m) }
 ]
