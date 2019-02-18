@@ -21,10 +21,10 @@
             <form>
               <v-card-text>
                 <!-- Email -->
-                <v-text-field 
+                <v-text-field
                   type="text"
-                  label="Email" 
-                  prepend-icon="mail" 
+                  label="Email"
+                  prepend-icon="mail"
                   v-model="form.email"
                   data-vv-name="Email"
                   v-validate="'required|email'"
@@ -33,10 +33,10 @@
                 ></v-text-field>
 
                 <!-- Password -->
-                <v-text-field 
+                <v-text-field
                   type="password"
-                  label="Password" 
-                  prepend-icon="lock" 
+                  label="Password"
+                  prepend-icon="lock"
                   v-model="form.password"
                   data-vv-name="Password"
                   v-validate="'required'"
@@ -45,19 +45,19 @@
 
                 <!-- Remember me checkbox -->
                 <v-checkbox
-                  label="Remember me" 
+                  label="Remember me"
                   v-model="remember"
-                  my-0 
+                  my-0
                 ></v-checkbox>
 
                 <v-layout column>
 
                   <!-- Login button -->
                   <v-flex mb-2>
-                    <v-btn 
-                      block 
-                      type="button" 
-                      color="primary" 
+                    <v-btn
+                      block
+                      type="button"
+                      color="primary"
                       @click.prevent="submit()"
                       :loading="$wait.any"
                     >Login</v-btn>
@@ -65,8 +65,13 @@
 
                   <v-divider></v-divider>
 
-                  <!-- Facebook login button -->
+                  <!-- GitHub login button -->
                   <v-flex my-2>
+                    <login-with-github :loading="$wait.any" />
+                  </v-flex>
+
+                  <!-- Facebook login button -->
+                  <!-- <v-flex >
                     <v-btn
                       block
                       color="blue"
@@ -76,10 +81,7 @@
                       <v-icon left dark>fab fa-facebook</v-icon>
                       Login with Facebook
                     </v-btn>
-                  </v-flex>
-
-                  <!-- GitHub login button -->
-                  <login-with-github :loading="$wait.any" />
+                  </v-flex> -->
 
                 </v-layout>
 
@@ -126,14 +128,14 @@ export default {
         // Check if all fields are valid
         if (this.errors.items.length === 0) {
           this.login()
-        } 
+        }
       })
     },
 
     login () {
       // Start loading
       this.$wait.start()
-      
+
       // Submit the form.
       this.$axios.post('/api/login', this.form).then(res => {
         const { data } = res
@@ -160,7 +162,7 @@ export default {
         this.$wait.end()
       })
     },
-    
+
   },
 }
 </script>
