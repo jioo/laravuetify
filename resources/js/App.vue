@@ -3,6 +3,7 @@
       <v-app>
         <loading ref="loading" />
         <router-view />
+        <notifications />
       </v-app>
   </div>
 </template>
@@ -30,3 +31,11 @@ export default {
   },
 }
 </script>
+
+<style>
+.vue-notification {
+  padding: 10px;
+  margin: 5px 5px 0 5px !important;
+  font-size: 14px;
+}
+</style>

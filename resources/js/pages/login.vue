@@ -8,10 +8,9 @@
             title="Login Form"
           >
 
-          <!-- Error messages -->
+            <!-- Error messages -->
             <v-card-text v-if="alert.show">
               <v-alert
-                :value="true"
                 color="error"
                 v-html="alert.message"
               >
@@ -59,7 +58,8 @@
                       type="button" 
                       color="primary" 
                       @click.prevent="submit()"
-                      :loading="$wait.any">Login</v-btn>
+                      :loading="$wait.any"
+                    >Login</v-btn>
                   </v-flex>
 
                   <v-divider></v-divider>
@@ -115,7 +115,7 @@ export default {
     async login () {
       try {
       // Start loading
-      this.$wait.start('login');
+      this.$wait.start();
       
       // Submit the form.
       const { data } = await this.$axios.post('/api/login', this.form)
@@ -136,7 +136,7 @@ export default {
       catch (error) { } 
       finally { 
         // End loading
-        this.$wait.end('login') 
+        this.$wait.end() 
       }
     },
 

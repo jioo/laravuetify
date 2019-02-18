@@ -51,6 +51,10 @@
               <v-list-tile :to="'/user-profile'">
                 <v-list-tile-title class="text-md-center">Profile</v-list-tile-title>
               </v-list-tile>
+              <v-list-tile :to="'/user-password'">
+                <v-list-tile-title class="text-md-center">Password</v-list-tile-title>
+              </v-list-tile>
+              <v-divider></v-divider>
               <v-list-tile @click.prevent="logout()">
                 <v-list-tile-title class="text-md-center">Logout</v-list-tile-title>
               </v-list-tile>

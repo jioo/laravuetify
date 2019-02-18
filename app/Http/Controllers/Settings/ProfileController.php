@@ -17,6 +17,6 @@ class ProfileController extends Controller
     public function update(UpdateProfile $request)
     {
         $user = $request->user();
-        return tap($user)->update($request->only('name', 'email'));
+        return tap($user)->update($request->only('name'));
     }
 }

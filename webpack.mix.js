@@ -21,6 +21,7 @@ if (mix.inProduction()) {
     'vue-meta',
     'js-cookie',
     'vue-router',
+    'vue-notification',
     'sweetalert2',
     'vuex-router-sync',
     'vuetify',

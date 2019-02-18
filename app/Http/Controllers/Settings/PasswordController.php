@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdatePassword;
 
 class PasswordController extends Controller
 {
@@ -13,12 +14,8 @@ class PasswordController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdatePassword $request)
     {
-        $this->validate($request, [
-            'password' => 'required|confirmed|min:6',
-        ]);
-
         $request->user()->update([
             'password' => bcrypt($request->password),
         ]);

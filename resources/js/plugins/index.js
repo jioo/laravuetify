@@ -1,4 +1,5 @@
 import './axios'
 import './chartlist'
+import './vue-notification'
 import './vuetify'
 import './vee-validate'

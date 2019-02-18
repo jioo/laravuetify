@@ -37,7 +37,8 @@ class LoginTest extends TestCase
         $this->actingAs($this->user)
             ->getJson('/api/user')
             ->assertSuccessful()
-            ->assertJsonStructure(['id', 'name', 'email', 'role']);
+            ->assertJsonStructure(['id', 'name', 'email', 'role'])
+            ->assertJson(['role' => ['admin'] ]);
     }
 
     /** @test */

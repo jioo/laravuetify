@@ -23,6 +23,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'secret',
         ])
         ->assertSuccessful()
-        ->assertJsonStructure(['id', 'name', 'email', 'role']);
+        ->assertJsonStructure(['id', 'name', 'email', 'role'])
+        ->assertJson(['role' => ['user'] ]);
     }
 }

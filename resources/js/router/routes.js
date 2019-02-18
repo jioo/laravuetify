@@ -8,6 +8,7 @@ export default [
       { path: '', redirect: { path: '/dashboard' } },
       { path: 'dashboard', name: 'Dashboard', component: () => import('~/pages/dashboard').then(m => m.default || m) },
       { path: 'user-profile', name: 'User Profile', component: () => import('~/pages/user-profile').then(m => m.default || m) },
+      { path: 'user-password', name: 'Change Password', component: () => import('~/pages/user-password').then(m => m.default || m) },
       { path: 'table-list', name: 'Table List', component: () => import('~/pages/table-list').then(m => m.default || m) },
       { path: 'typography', name: 'Typography', component: () => import('~/pages/typography').then(m => m.default || m) },
       { path: 'icons', name: 'Icons', component: () => import('~/pages/icons').then(m => m.default || m) },
