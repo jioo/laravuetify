@@ -60,8 +60,10 @@ npm run production
 ```
 
 ### Tips ###
-1. To enable login with github, make a New OAuth App and copy this configuration: 
-![Github App Config](docs/github-app-config.jpg)
+1. To enable login with github:
+    - Create a New OAuth App and copy this configuration:
+    ![Github App Config](docs/github-app-config.jpg)
+    - Then update the `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` in .env file
 2. To send email in `Reset Password` module: 
     - Update the email config in .env file with your gmail account
     ![Gmail Config](docs/gmail-config.jpg)
