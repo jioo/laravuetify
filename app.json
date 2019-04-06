@@ -1,0 +1,21 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/php"
+    }
+  ],
+  "env": {
+  },
+  "formation": {
+  },
+  "name": "laravuetify",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
